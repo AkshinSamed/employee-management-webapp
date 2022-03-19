@@ -7,5 +7,6 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
     void saveEmployee(Employee employee);
     Employee getEmployeeByID(Long id);
+    void deleteEmployeeByID(Long id);
 
 }
