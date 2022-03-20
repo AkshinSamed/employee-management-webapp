@@ -3,7 +3,7 @@ Simple Employee Management Web Application.
 
 Technologies used:
 
-Frontend: Thymleaf + CSS(Bootstrap)
+Frontend: Thymeleaf + CSS(Bootstrap)
 
 Backend: Java(Spring Boot + Hibernate)
 
