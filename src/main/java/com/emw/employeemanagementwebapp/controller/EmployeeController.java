@@ -3,12 +3,15 @@ package com.emw.employeemanagementwebapp.controller;
 import com.emw.employeemanagementwebapp.model.Employee;
 import com.emw.employeemanagementwebapp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -19,8 +22,7 @@ public class EmployeeController {
     //display list of employees
     @GetMapping("/")
     public String viewHomePage(Model model){
-        model.addAttribute("listEmployees", employeeService.getAllEmployees());
-        return "index";
+        return findPaginated(1, model);
     }
 
     @GetMapping("/showNewEmployeeForm")
@@ -51,5 +53,21 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable("id") Long id){
         employeeService.deleteEmployeeByID(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable("pageNo") int pageNo,
+                                Model model){
+        int pageSize = 5;
+
+        Page<Employee> page = employeeService.findPaginated(pageNo, pageSize);
+        List<Employee> employeeList = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("employeeList", employeeList);
+
+        return "index";
     }
 }
