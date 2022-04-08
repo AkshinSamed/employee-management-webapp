@@ -28,18 +28,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(UserRegistrationDTO registrationDTO) {
-        User user = new User(registrationDTO.getFirstName(),
-                             registrationDTO.getLastName(),
-                             registrationDTO.getEmail(),
-                             passwordEncoder.encode(registrationDTO.getPassword()),
-                             List.of(new Role("ROLE_USER")));
-
-        return userRepository.save(user);
+        return userRepository
+                .save(new User(registrationDTO.getFirstName(),
+                               registrationDTO.getLastName(),
+                               registrationDTO.getEmail(),
+                               passwordEncoder.encode(registrationDTO.getPassword()),
+                               List.of(new Role("ROLE_USER"))));
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(username);
+        User user = userRepository.findByEmail(username);
         if (user == null){
             throw new UsernameNotFoundException("Invalid username or password");
         }
