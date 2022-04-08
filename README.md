@@ -5,6 +5,6 @@ Technologies used:
 
 Frontend: Thymeleaf + CSS(Bootstrap)
 
-Backend: Java(Spring Boot + Hibernate)
+Backend: Java(Spring Boot + Hibernate + Spring Security)
 
 Database: PostgreSQL
